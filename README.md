@@ -108,12 +108,6 @@ python manage.py runserver
 - Browse users and send skill swap requests
 - Visit `/admin/` for admin moderation tools
 
----
-
-## 🎥 Demo
-
-> 🔜 A 5–7 minute demo video will showcase:  
-> Register → Add Skills → Browse Users → Swap Request Flow → Admin Moderation
 
 ---
 
