@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Swap Requests</h2>
+
+<h3>Send New Request</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Send Request</button>
+</form>
+
+<hr>
+
+<h3>Incoming Requests</h3>
+<ul class="list-group">
+    {% for req in incoming %}
+        <li class="list-group-item">
+            From {{ req.from_user }} → Skill: {{ req.skill_requested }} |
+            Status: {{ req.status }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">No incoming requests.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h3>Outgoing Requests</h3>
+<ul class="list-group">
+    {% for req in outgoing %}
+        <li class="list-group-item">
+            To {{ req.to_user }} → Skill: {{ req.skill_offered }} |
+            Status: {{ req.status }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">No outgoing requests.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
