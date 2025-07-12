@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, SkillForm, SwapRequestForm
 from .models import User, Skill, SwapRequest
 from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 def home(request):
     users = User.objects.filter(is_public=True, is_banned=False).exclude(id=request.user.id) if request.user.is_authenticated else []
@@ -71,3 +73,36 @@ def swap_requests(request):
         'incoming': incoming,
         'outgoing': outgoing
     })
+
+@login_required
+def accept_swap(request, swap_id):
+    swap = get_object_or_404(SwapRequest, id=swap_id, to_user=request.user)
+    if request.method == 'POST' and swap.status == 'pending':
+        swap.status = 'accepted'
+        swap.save()
+    return HttpResponseRedirect(reverse('swap_requests'))
+
+@login_required
+def reject_swap(request, swap_id):
+    swap = get_object_or_404(SwapRequest, id=swap_id, to_user=request.user)
+    if request.method == 'POST' and swap.status == 'pending':
+        swap.status = 'rejected'
+        swap.save()
+    return HttpResponseRedirect(reverse('swap_requests'))
+
+@login_required
+def cancel_swap(request, swap_id):
+    swap = get_object_or_404(SwapRequest, id=swap_id, from_user=request.user)
+    if request.method == 'POST' and swap.status == 'pending':
+        swap.status = 'cancelled'
+        swap.save()
+        messages.success(request, "Swap request cancelled.")
+    return redirect('swap_requests')
+
+@login_required
+def delete_swap(request, swap_id):
+    swap = get_object_or_404(SwapRequest, id=swap_id, from_user=request.user)
+    if request.method == 'POST' and swap.status != 'pending':
+        swap.delete()
+        messages.success(request, "Swap request deleted.")
+    return redirect('swap_requests')
