@@ -2,77 +2,413 @@
 
 {% block css %}
 <style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
-        background: #f4f8fb;
+        font-family: 'Arial', sans-serif;
+        background-color: #FAF9F6;
+        color: #2F3E46;
+        line-height: 1.6;
     }
 
-    .profile-card {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        padding: 30px;
-        max-width: 600px;
-        margin: 40px auto;
+    /* Color Variables */
+    :root {
+        --cream: #FAF9F6;
+        --sage: #6B9080;
+        --mint: #A4C3B2;
+        --beige: #CB997E;
+        --charcoal: #2F3E46;
     }
 
-    h2 {
+    /* Main Container */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    /* Profile Header */
+    .profile-header {
+        background: linear-gradient(135deg, var(--sage) 0%, var(--mint) 100%);
+        border-radius: 20px;
+        padding: 3rem 2rem;
         text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        opacity: 0.3;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        border: 4px solid white;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 1;
+        background: var(--beige);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
         font-weight: bold;
-        color: #333;
-        margin-bottom: 30px;
+        color: white;
     }
 
-    p {
+    .profile-name {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-location {
         font-size: 1.1rem;
-        padding: 10px 0;
-        border-bottom: 1px solid #f0f0f0;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
     }
 
-    p strong {
-        color: #444;
-        margin-right: 8px;
+    .edit-profile-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.8rem 2rem;
+        border: 2px solid white;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: inline-block;
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1;
     }
 
-    .btn {
-        margin-right: 10px;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 8px 16px;
-        transition: 0.3s ease;
+    .edit-profile-btn:hover {
+        background: white;
+        color: var(--sage);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(255,255,255,0.3);
     }
 
-    .btn-info:hover {
-        background-color: #0b8bd4;
+    /* Section Styles */
+    .section {
+        background: white;
+        margin-bottom: 2rem;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .btn-warning:hover {
-        background-color: #e0a800;
+    .section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
 
-    .btn i {
-        margin-right: 6px;
+    .section-title {
+        font-size: 1.8rem;
+        color: var(--sage);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .skill-card {
+        background: var(--cream);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .skill-card:hover {
+        border-color: var(--sage);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(107, 144, 128, 0.2);
+    }
+
+    .skill-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--charcoal);
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-type {
+        display: inline-block;
+        background: var(--sage);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-type.wanted {
+        background: var(--beige);
+    }
+
+    .skill-type.offered {
+        background: var(--sage);
+    }
+
+    /* Availability Pills */
+    .availability-pills {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .availability-pill {
+        background: var(--mint);
+        color: var(--charcoal);
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .availability-pill:hover {
+        background: var(--sage);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Stats Section */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .stat-card {
+        background: var(--cream);
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--sage);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--charcoal);
+        font-weight: 500;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #6B7280;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .profile-header {
+            padding: 2rem 1rem;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+        }
+
+        .skills-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .availability-pills {
+            justify-content: center;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="profile-card">
-    <h2>👤 My Profile</h2>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Location:</strong> {{ user.location }}</p>
-    <p><strong>Availability:</strong> {{ user.availability }}</p>
+<div class="container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {{ user.username|first|upper }}
+        </div>
+        <h1 class="profile-name">{{ user.username }}</h1>
+        {% if user.location %}
+            <p class="profile-location">📍 {{ user.location }}</p>
+        {% endif %}
+        {% if user.availability %}
+            <p class="profile-location">⏰ {{ user.availability }}</p>
+        {% endif %}
+        <a href="{% url 'manage_skills' %}" class="edit-profile-btn">Manage Skills</a>
+    </div>
 
-    <div class="mt-4">
-        <a href="{% url 'manage_skills' %}" class="btn btn-info">
-            <i class="fas fa-tools"></i> Manage Skills
-        </a>
-        <a href="{% url 'swap_requests' %}" class="btn btn-warning">
-            <i class="fas fa-exchange-alt"></i> Swap Requests
-        </a>
+    <!-- Stats Section -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">📊</span>
+            Your Activity
+        </h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ offered_skills.count }}</div>
+                <div class="stat-label">Skills Offered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ wanted_skills.count }}</div>
+                <div class="stat-label">Skills Wanted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ user.swaprequest_set.count }}</div>
+                <div class="stat-label">Total Requests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ user.received_requests.count }}</div>
+                <div class="stat-label">Received Requests</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Offered Section -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">🎯</span>
+            Skills I Can Teach
+        </h2>
+        <div class="skills-grid">
+            {% for skill in offered_skills %}
+                <div class="skill-card">
+                    <div class="skill-name">{{ skill.skill_name }}</div>
+                    <span class="skill-type offered">Offering</span>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎯</div>
+                    <h3>No skills offered yet</h3>
+                    <p>Add skills you can teach to start connecting with others!</p>
+                    <a href="{% url 'manage_skills' %}" class="edit-profile-btn" style="margin-top: 1rem;">Add Skills</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Skills Wanted Section -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">🔍</span>
+            Skills I Want to Learn
+        </h2>
+        <div class="skills-grid">
+            {% for skill in wanted_skills %}
+                <div class="skill-card">
+                    <div class="skill-name">{{ skill.skill_name }}</div>
+                    <span class="skill-type wanted">Wanted</span>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔍</div>
+                    <h3>No skills wanted yet</h3>
+                    <p>Add skills you want to learn to find people who can teach you!</p>
+                    <a href="{% url 'manage_skills' %}" class="edit-profile-btn" style="margin-top: 1rem;">Add Skills</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Availability Section -->
+    {% if user.availability %}
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">⏰</span>
+            Availability
+        </h2>
+        <div class="availability-pills">
+            <span class="availability-pill">{{ user.availability }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Actions -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">⚡</span>
+            Quick Actions
+        </h2>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'manage_skills' %}" class="edit-profile-btn" style="background: var(--sage); color: white;">
+                Manage Skills
+            </a>
+            <a href="{% url 'swap_requests' %}" class="edit-profile-btn" style="background: var(--beige); color: white;">
+                View Swap Requests
+            </a>
+            <a href="{% url 'home' %}" class="edit-profile-btn" style="background: var(--mint); color: var(--charcoal);">
+                Browse Users
+            </a>
+        </div>
     </div>
 </div>
-
-<!-- Font Awesome for icons -->
-<script src="https://kit.fontawesome.com/a2e0c1c6b1.js" crossorigin="anonymous"></script>
 {% endblock %}

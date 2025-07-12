@@ -3,117 +3,240 @@
 {% block css %}
 <style>
     body {
-        background: linear-gradient(to right, #f0f4ff, #ffffff);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #A4C3B2 0%, #6B9080 100%);
         min-height: 100vh;
+        margin: 0;
     }
-
-    .register-wrapper {
+    .register-page-wrapper {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
+        justify-content: flex-start;
         min-height: 100vh;
-        padding: 40px 20px;
+        width: 100vw;
+        padding-top: 60px;
+        padding-bottom: 40px;
     }
-
-    .register-card {
-        background: #fff;
-        padding: 50px 50px 40px;
-        border-radius: 16px;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    .register-container {
         width: 100%;
-        max-width: 700px;
+        max-width: 480px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 16px 48px rgba(47, 62, 70, 0.15), 0 1.5px 8px rgba(47, 62, 70, 0.08);
+        overflow: hidden;
+        margin: 40px 0 0 0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    .register-card h2 {
+    .register-container:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 24px 64px rgba(47, 62, 70, 0.18), 0 5px 15px rgba(47, 62, 70, 0.10);
+    }
+    .header {
+        background: linear-gradient(135deg, #6B9080 0%, #A4C3B2 100%);
+        padding: 2.5rem 2rem 2rem 2rem;
         text-align: center;
-        margin-bottom: 35px;
-        color: #1c1e21;
-        font-weight: 700;
-        font-size: 28px;
-    }
-
-    .register-card form p {
-        margin-bottom: 20px;
-    }
-
-    .register-card label {
-        font-weight: 500;
-        color: #333;
-        margin-bottom: 6px;
-        display: inline-block;
-    }
-
-    .register-card input,
-    .register-card select,
-    .register-card textarea {
-        border-radius: 8px;
-        padding: 12px;
-        border: 1px solid #ccc;
-        width: 100%;
-        box-sizing: border-box;
-        transition: 0.3s ease;
-    }
-
-    .register-card input:focus,
-    .register-card select:focus,
-    .register-card textarea:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
-    }
-
-    .btn-register {
-        width: 100%;
-        background: #28a745;
-        border: none;
         color: white;
+    }
+    .logo {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1px;
+    }
+    .header p {
+        opacity: 0.9;
+        font-size: 1.05rem;
+        font-weight: 400;
+    }
+    .form-section {
+        padding: 2.2rem 2rem 2rem 2rem;
+    }
+    .form-title {
+        font-size: 1.5rem;
         font-weight: 600;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: background 0.3s ease;
-        margin-top: 10px;
-    }
-
-    .btn-register:hover {
-        background: #218838;
-    }
-
-    .form-footer {
+        color: #2F3E46;
+        margin-bottom: 1.5rem;
         text-align: center;
-        margin-top: 25px;
-        font-size: 14px;
     }
-
-    .form-footer a {
-        color: #007bff;
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2F3E46;
+        font-size: 1rem;
+    }
+    .form-input {
+        width: 100%;
+        padding: 1.1rem 1.25rem;
+        border: 2px solid #E5E7EB;
+        border-radius: 14px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        background: #FEFEFE;
+        color: #2F3E46;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #6B9080;
+        box-shadow: 0 0 0 3px rgba(107, 144, 128, 0.12);
+        background: white;
+    }
+    .submit-btn {
+        width: 100%;
+        padding: 1.1rem 1.5rem;
+        background: linear-gradient(135deg, #CB997E 0%, #A4C3B2 100%);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-size: 1.15rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        letter-spacing: 0.5px;
+    }
+    .submit-btn:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 8px 25px rgba(203, 153, 126, 0.3);
+    }
+    .error-message {
+        color: #EF4444;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+        text-align: center;
+        background: #FEF2F2;
+        padding: 0.7rem;
+        border-radius: 10px;
+        border: 1px solid #FECACA;
+    }
+    .form-error {
+        color: #dc3545;
+        font-size: 1rem;
+        margin-top: 0.25rem;
+    }
+    .footer-link {
+        text-align: center;
+        margin-top: 2.2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #E5E7EB;
+        color: #6B7280;
+        font-size: 1rem;
+    }
+    .footer-link a {
+        color: #6B9080;
         text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
     }
-
-    .form-footer a:hover {
+    .footer-link a:hover {
+        color: #CB997E;
         text-decoration: underline;
     }
-
-    @media (max-width: 576px) {
-        .register-card {
-            padding: 30px 20px;
+    @media (max-width: 900px) {
+        .register-container {
+            max-width: 98vw;
+        }
+    }
+    @media (max-width: 600px) {
+        .register-page-wrapper {
+            padding-top: 20px;
+        }
+        .register-container {
+            max-width: 100vw;
+            border-radius: 0;
+        }
+        .header {
+            padding: 2rem 1.2rem 1.2rem 1.2rem;
+        }
+        .form-section {
+            padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+        }
+        .form-title {
+            font-size: 1.2rem;
+        }
+        .logo {
+            font-size: 2rem;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="register-wrapper">
-    <div class="register-card">
-        <h2>📝 Create Your SkillSwap Account</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-register">Register</button>
-        </form>
-        <div class="form-footer">
-            Already have an account? <a href="{% url 'login' %}">Login here</a>
+<div class="register-page-wrapper">
+    <div class="register-container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">🎯</div>
+            <h1>SkillSwap</h1>
+            <p>Join the skill exchange community</p>
+        </div>
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2 class="form-title">Create Your Account</h2>
+            <p style="text-align: center; color: #6B7280; margin-bottom: 1.5rem;">Start sharing and learning skills today</p>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" required autofocus>
+                    {% if form.username.errors %}
+                        <div class="form-error">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    {% if form.email.errors %}
+                        <div class="form-error">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="location">Location (Optional)</label>
+                    <input type="text" id="location" name="location" class="form-input" placeholder="City, State">
+                    {% if form.location.errors %}
+                        <div class="form-error">{{ form.location.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="availability">Availability (Optional)</label>
+                    <input type="text" id="availability" name="availability" class="form-input" placeholder="e.g., Weekends, Evenings">
+                    {% if form.availability.errors %}
+                        <div class="form-error">{{ form.availability.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password1">Password</label>
+                    <input type="password" id="password1" name="password1" class="form-input" required>
+                    {% if form.password1.errors %}
+                        <div class="form-error">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password2">Confirm Password</label>
+                    <input type="password" id="password2" name="password2" class="form-input" required>
+                    {% if form.password2.errors %}
+                        <div class="form-error">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            <div class="footer-link">
+                Already have an account? <a href="{% url 'login' %}">Sign in here</a>
+            </div>
         </div>
     </div>
 </div>

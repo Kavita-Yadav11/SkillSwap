@@ -1,49 +1,702 @@
 {% extends 'core/base.html' %}
-
 {% block css %}
-<style>
-    h2 {
-        font-weight: bold;
-        color: #343a40;
-        margin-bottom: 20px;
-        font-size: 1.8rem;
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FAF9F6;
+            color: #2F3E46;
+            line-height: 1.6;
+        }
+
+        /* Color Variables */
+        :root {
+            --cream: #FAF9F6;
+            --sage: #6B9080;
+            --mint: #A4C3B2;
+            --beige: #CB997E;
+            --charcoal: #2F3E46;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--cream);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--sage);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--beige);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage);
+            background-color: var(--mint);
+        }
+
+        /* Mobile Navigation */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--sage);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--mint) 0%, var(--sage) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--beige);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #B88A6B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(203, 153, 126, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--sage);
+            transform: translateY(-2px);
+        }
+
+    /* Dashboard Section (for logged in users) */
+    .dashboard {
+        padding: 2rem 0;
+        background-color: var(--cream);
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .welcome-section {
+        background: linear-gradient(135deg, var(--sage) 0%, var(--mint) 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        color: white;
         text-align: center;
+        margin-bottom: 2rem;
     }
 
-    .list-group-item {
-        background-color: #ffffff;
-        border: none;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        transition: all 0.3s ease-in-out;
-        padding: 15px 20px;
-        font-size: 1.1rem;
+    .welcome-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
     }
 
-    .list-group-item:hover {
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--sage);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--charcoal);
+        font-weight: 500;
+    }
+
+    .users-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .user-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .user-card:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        background: #f1f5ff;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
 
-    ul.list-group {
-        max-width: 600px;
-        margin: auto;
+    .user-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
     }
-</style>
+
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--sage);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 1rem;
+    }
+
+    .user-info h3 {
+        color: var(--charcoal);
+        margin-bottom: 0.25rem;
+    }
+
+    .user-location {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .user-skills {
+        margin-top: 1rem;
+    }
+
+    .skill-tag {
+        display: inline-block;
+        background: var(--mint);
+        color: var(--charcoal);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin: 0.2rem;
+    }
+
+    .skill-tag.offered {
+        background: var(--sage);
+        color: white;
+    }
+
+    .skill-tag.wanted {
+        background: var(--beige);
+        color: white;
+    }
+
+    .connect-btn {
+        background: var(--sage);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .connect-btn:hover {
+        background: var(--beige);
+        transform: translateY(-2px);
+    }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 0;
+            background-color: var(--cream);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--sage);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--sage);
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--charcoal);
+        }
+
+        .step-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--sage) 0%, var(--mint) 100%);
+            color: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--mint);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--cream);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero-container,
+        .section-container,
+        .dashboard-container {
+                padding: 0 1rem;
+            }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .users-grid {
+            grid-template-columns: 1fr;
+        }
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-<h2>🌟 Other SkillSwappers</h2>
-<ul class="list-group">
-    {% for user in users %}
-        <li class="list-group-item">
-            <strong>{{ user.username }}</strong>  
-            <span class="text-muted">— {{ user.location }}</span>
-        </li>
-    {% empty %}
-        <li class="list-group-item">No users found 😢</li>
-    {% endfor %}
-</ul>
+{% if user.is_authenticated %}
+    <!-- Dashboard for logged in users -->
+    <div class="dashboard">
+        <div class="dashboard-container">
+            <div class="welcome-section">
+                <h1>Welcome back, {{ user.username }}! 👋</h1>
+                <p>Ready to share your skills and learn from others?</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ user_skills_count }}</div>
+                    <div class="stat-label">Your Skills</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ incoming_requests_count }}</div>
+                    <div class="stat-label">Incoming Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ outgoing_requests_count }}</div>
+                    <div class="stat-label">Outgoing Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ available_users_count }}</div>
+                    <div class="stat-label">Available Users</div>
+                </div>
+            </div>
+
+            <!-- Available Users -->
+            <h2 style="color: var(--sage); margin-bottom: 1.5rem;">👥 People You Can Connect With</h2>
+            <div class="users-grid">
+                {% for other_user in users %}
+                    <div class="user-card">
+                        <div class="user-header">
+                            <div class="user-avatar">
+                                {{ other_user.username|first|upper }}
+                            </div>
+                            <div class="user-info">
+                                <h3>{{ other_user.username }}</h3>
+                                {% if other_user.location %}
+                                    <div class="user-location">{{ other_user.location }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="user-skills">
+                            {% for skill in other_user.skill_set.all %}
+                                <span class="skill-tag {{ skill.type }}">{{ skill.skill_name }}</span>
+                            {% empty %}
+                                <p style="color: #666; font-style: italic;">No skills listed yet</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <a href="{% url 'swap_requests' %}?to_user={{ other_user.id }}" class="connect-btn">
+                            Connect & Swap
+                        </a>
+                    </div>
+                {% empty %}
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                        <p>No other users available at the moment.</p>
+                        <p>Be the first to add your skills!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <!-- Landing page for non-authenticated users -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Exchange Skills. Empower Each Other.</h1>
+            <p>Connect with your community to share knowledge, learn new skills, and build meaningful relationships through collaborative learning.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'register' %}" class="btn btn-primary">Get Started</a>
+                <a href="{% url 'login' %}" class="btn btn-secondary">Sign In</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="section-container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-icon">🎯</div>
+                    <h3 class="step-title">Offer Your Skills</h3>
+                    <p class="step-description">Share what you're good at - from cooking to coding, gardening to guitar. Everyone has something valuable to teach.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🔍</div>
+                    <h3 class="step-title">Request What You Need</h3>
+                    <p class="step-description">Browse available skills in your area and connect with people who can help you learn something new.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🤝</div>
+                    <h3 class="step-title">Make the Swap</h3>
+                    <p class="step-description">Meet up, exchange knowledge, and build lasting connections in your community through skill sharing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="section-container">
+            <h2 class="section-title">Why SkillSwap?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌱</div>
+                    <h3 class="benefit-title">Grow Together</h3>
+                    <p>Learn new skills while sharing your expertise with others in your community.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3 class="benefit-title">Cost-Free Learning</h3>
+                    <p>Access valuable skills and knowledge without spending money on courses or classes.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤝</div>
+                    <h3 class="benefit-title">Build Connections</h3>
+                    <p>Meet like-minded people in your area and form meaningful relationships.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">Quick & Easy</h3>
+                    <p>Simple platform to find skill matches and coordinate learning sessions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="section-container">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2025 SkillSwap. Empowering communities through skill sharing.</p>
+        </div>
+    </footer>
+{% endif %}
+
+    <script>
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+        if (nav && window.scrollY > 50) {
+                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+        } else if (nav) {
+                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Animate cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+    document.querySelectorAll('.step-card, .benefit-card, .user-card, .stat-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
 {% endblock %}

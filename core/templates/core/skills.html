@@ -3,92 +3,291 @@
 {% block css %}
 <style>
     body {
-        background: #eef2f7;
+        background: linear-gradient(135deg, #6B9080 0%, #A4C3B2 100%);
+        min-height: 100vh;
+        padding: 2rem 0;
     }
 
     .skills-container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-        max-width: 700px;
-        margin: 40px auto;
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 0 auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
     }
 
-    h2, h3 {
+    .page-title {
         text-align: center;
-        color: #333;
+        color: #2F3E46;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
         font-weight: bold;
-        margin-bottom: 25px;
     }
 
-    form p {
-        margin-bottom: 20px;
+    .form-section {
+        background: #FAF9F6;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
     }
 
-    input[type="text"], select {
+    .form-title {
+        font-size: 1.5rem;
+        color: #6B9080;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2F3E46;
+    }
+
+    .form-control {
         width: 100%;
-        padding: 10px 15px;
+        padding: 0.8rem 1rem;
+        border: 2px solid #E5E7EB;
         border-radius: 8px;
-        border: 1px solid #ccc;
-        transition: 0.3s ease;
+        font-size: 1rem;
+        transition: all 0.3s ease;
     }
 
-    input:focus, select:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.2);
+    .form-control:focus {
         outline: none;
+        border-color: #6B9080;
+        box-shadow: 0 0 0 3px rgba(107, 144, 128, 0.1);
     }
 
-    .btn-success {
-        width: 100%;
-        padding: 10px;
+    .btn {
+        padding: 0.8rem 1.5rem;
         border-radius: 8px;
         font-weight: 600;
-        transition: 0.3s ease;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .list-group {
-        margin-top: 25px;
-    }
-
-    .list-group-item {
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s ease;
         border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6B9080 0%, #A4C3B2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(107, 144, 128, 0.3);
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+    }
+
+    .skills-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .skill-card {
+        background: white;
+        border: 2px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+        border-color: #6B9080;
+        box-shadow: 0 4px 15px rgba(107, 144, 128, 0.1);
+    }
+
+    .skill-info {
+        flex: 1;
+    }
+
+    .skill-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2F3E46;
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-type {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .skill-type.offered {
+        background: #6B9080;
+        color: white;
+    }
+
+    .skill-type.wanted {
+        background: #CB997E;
+        color: white;
+    }
+
+    .skill-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #6B7280;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
         border-radius: 8px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-        font-size: 1.05rem;
-        padding: 12px 18px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        margin-bottom: 1rem;
+        border: 1px solid #f5c6cb;
+    }
+
+    .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: 1px solid #c3e6cb;
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+        .skills-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        .skill-card {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .skill-actions {
+            width: 100%;
+            justify-content: flex-end;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="skills-container">
-    <h2>🛠️ Manage My Skills</h2>
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Add Skill</button>
-    </form>
+    <h1 class="page-title">🛠 Manage My Skills</h1>
 
-    <hr>
-
-    <h3>📋 My Skills</h3>
-    <ul class="list-group">
-        {% for skill in skills %}
-            <li class="list-group-item">
-                <strong>{{ skill.skill_name }}</strong> <span class="badge badge-pill badge-secondary">{{ skill.type }}</span>
-            </li>
-        {% empty %}
-            <li class="list-group-item">No skills added yet.</li>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                {{ message }}
+            </div>
         {% endfor %}
-    </ul>
+    {% endif %}
+
+    <!-- Add Skill Form -->
+    <div class="form-section">
+        <h2 class="form-title">➕ Add New Skill</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label class="form-label" for="skill_name">Skill Name:</label>
+                <input type="text" name="skill_name" id="skill_name" class="form-control" 
+                       value="{{ form.skill_name.value|default:'' }}" required 
+                       placeholder="e.g., Guitar, Cooking, Programming, Spanish">
+                {% if form.skill_name.errors %}
+                    <div class="form-error">{{ form.skill_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="type">Skill Type:</label>
+                <select name="type" id="type" class="form-control" required>
+                    <option value="">Select type...</option>
+                    <option value="offered" {% if form.type.value == 'offered' %}selected{% endif %}>
+                        I can teach this
+                    </option>
+                    <option value="wanted" {% if form.type.value == 'wanted' %}selected{% endif %}>
+                        I want to learn this
+                    </option>
+                </select>
+                {% if form.type.errors %}
+                    <div class="form-error">{{ form.type.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Skill</button>
+        </form>
+    </div>
+
+    <!-- Skills List -->
+    <div class="skills-section">
+        <h2 class="form-title">📋 My Skills</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <div class="skill-name">{{ skill.skill_name }}</div>
+                        <span class="skill-type {{ skill.type }}">{{ skill.type|title }}</span>
+                    </div>
+                    <div class="skill-actions">
+                        <form method="post" action="{% url 'delete_skill' skill.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" 
+                                    onclick="return confirm('Are you sure you want to delete this skill?')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <h3>No skills added yet</h3>
+                    <p>Add your first skill to start connecting with others!</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}
