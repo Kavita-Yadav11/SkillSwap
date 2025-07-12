@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Other SkillSwappers</h2>
+<ul class="list-group">
+    {% for user in users %}
+        <li class="list-group-item">{{ user.username }} - {{ user.location }}</li>
+    {% empty %}
+        <li class="list-group-item">No users found</li>
+    {% endfor %}
+</ul>
+{% endblock %}

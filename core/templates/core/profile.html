@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>My Profile</h2>
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Location:</strong> {{ user.location }}</p>
+<p><strong>Availability:</strong> {{ user.availability }}</p>
+
+<a href="{% url 'manage_skills' %}" class="btn btn-info">Manage Skills</a>
+<a href="{% url 'swap_requests' %}" class="btn btn-warning">Swap Requests</a>
+{% endblock %}

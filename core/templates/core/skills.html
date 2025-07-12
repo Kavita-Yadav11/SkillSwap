@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Manage My Skills</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Add Skill</button>
+</form>
+
+<hr>
+<h3>My Skills</h3>
+<ul class="list-group">
+    {% for skill in skills %}
+        <li class="list-group-item">
+            {{ skill.skill_name }} ({{ skill.type }})
+        </li>
+    {% empty %}
+        <li class="list-group-item">No skills added yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
