@@ -1,84 +1,4 @@
 {% extends 'core/base.html' %}
- 
-        
-    
-{% block css %}
-<style>
-    body {
-        background: #eef2f7;
-    }
-
-    .skills-container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-        max-width: 700px;
-        margin: 40px auto;
-    }
-
-    h2, h3 {
-        text-align: center;
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 25px;
-    }
-
-    form p {
-        margin-bottom: 20px;
-    }
-
-    input[type="text"], select {
-        width: 100%;
-        padding: 10px 15px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        transition: 0.3s ease;
-    }
-
-    input:focus, select:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.2);
-        outline: none;
-    }
-
-    .btn-success {
-        width: 100%;
-        padding: 10px;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: 0.3s ease;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .list-group {
-        margin-top: 25px;
-    }
-
-    .list-group-item {
-        border: none;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-        font-size: 1.05rem;
-        padding: 12px 18px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-     
-<h2>Manage My Skills</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Add Skill</button>
-</form>
-   
 
 {% block css %}
 <style>
@@ -148,7 +68,6 @@
 </style>
 {% endblock %}
 
-    
 {% block content %}
 <div class="skills-container">
     <h2>🛠️ Manage My Skills</h2>
@@ -159,16 +78,6 @@
         <button type="submit" class="btn btn-success">Add Skill</button>
     </form>
 
-    <div class="skills-container">
-    <h2>🛠️ Manage My Skills</h2>
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Add Skill</button>
-    </form>
-
-    
     <hr>
 
     <h3>📋 My Skills</h3>

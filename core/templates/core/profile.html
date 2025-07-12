@@ -1,70 +1,4 @@
 {% extends 'core/base.html' %}
- 
-        
-    
-{% block css %}
-<style>
-    body {
-        background: #f4f8fb;
-    }
-
-    .profile-card {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        padding: 30px;
-        max-width: 600px;
-        margin: 40px auto;
-    }
-
-    h2 {
-        text-align: center;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 30px;
-    }
-
-    p {
-        font-size: 1.1rem;
-        padding: 10px 0;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    p strong {
-        color: #444;
-        margin-right: 8px;
-    }
-
-    .btn {
-        margin-right: 10px;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 8px 16px;
-        transition: 0.3s ease;
-    }
-
-    .btn-info:hover {
-        background-color: #0b8bd4;
-    }
-
-    .btn-warning:hover {
-        background-color: #e0a800;
-    }
-
-    .btn i {
-        margin-right: 6px;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-     
-<h2>My Profile</h2>
-<p><strong>Username:</strong> {{ user.username }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Location:</strong> {{ user.location }}</p>
-<p><strong>Availability:</strong> {{ user.availability }}</p>
-   
 
 {% block css %}
 <style>
@@ -121,7 +55,6 @@
 </style>
 {% endblock %}
 
-    
 {% block content %}
 <div class="profile-card">
     <h2>👤 My Profile</h2>
@@ -130,14 +63,6 @@
     <p><strong>Location:</strong> {{ user.location }}</p>
     <p><strong>Availability:</strong> {{ user.availability }}</p>
 
-    <div class="profile-card">
-    <h2>👤 My Profile</h2>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Location:</strong> {{ user.location }}</p>
-    <p><strong>Availability:</strong> {{ user.availability }}</p>
-
-    
     <div class="mt-4">
         <a href="{% url 'manage_skills' %}" class="btn btn-info">
             <i class="fas fa-tools"></i> Manage Skills

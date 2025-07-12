@@ -1,94 +1,4 @@
 {% extends 'core/base.html' %}
- 
-        
-    
-{% block css %}
-<style>
-    body {
-        background: #f5f9ff;
-    }
-
-    .swap-container {
-        background: #fff;
-        border-radius: 12px;
-        padding: 30px;
-        margin: 40px auto;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        max-width: 800px;
-    }
-
-    h2, h3 {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 20px;
-    }
-
-    form {
-        margin-bottom: 30px;
-    }
-
-    form p {
-        margin-bottom: 20px;
-    }
-
-    .form-control {
-        border-radius: 8px;
-    }
-
-    .btn-success {
-        width: 100%;
-        padding: 10px;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: 0.3s ease;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .list-group-item {
-        background-color: #fdfdfd;
-        margin-bottom: 10px;
-        border: 1px solid #e5e5e5;
-        border-radius: 8px;
-        padding: 15px 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-        font-size: 1rem;
-    }
-
-    .badge-status {
-        font-size: 0.85rem;
-        padding: 4px 10px;
-        border-radius: 50px;
-    }
-
-    .badge-status.Pending {
-        background-color: #ffc107;
-        color: #212529;
-    }
-
-    .badge-status.Accepted {
-        background-color: #28a745;
-        color: white;
-    }
-
-    .badge-status.Rejected {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .swap-label {
-        font-weight: 500;
-        color: #555;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-     
-<h2>Swap Requests</h2>
-   
 
 {% block css %}
 <style>
@@ -173,7 +83,6 @@
 </style>
 {% endblock %}
 
-    
 {% block content %}
 <div class="swap-container">
     <h2>🔁 Swap Requests</h2>
@@ -203,35 +112,6 @@
 
     <hr>
 
-    <div class="swap-container">
-    <h2>🔁 Swap Requests</h2>
-
-    <h3>📤 Send New Request</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Send Request</button>
-    </form>
-
-    <hr>
-
-    <h3>📥 Incoming Requests</h3>
-    <ul class="list-group">
-        {% for req in incoming %}
-            <li class="list-group-item">
-                <span class="swap-label">From:</span> <strong>{{ req.from_user }}</strong><br>
-                <span class="swap-label">Skill Requested:</span> {{ req.skill_requested }}<br>
-                <span class="swap-label">Status:</span> 
-                <span class="badge badge-status {{ req.status }}">{{ req.status }}</span>
-            </li>
-        {% empty %}
-            <li class="list-group-item">No incoming requests.</li>
-        {% endfor %}
-    </ul>
-
-    <hr>
-
-    
     <h3>📤 Outgoing Requests</h3>
     <ul class="list-group">
         {% for req in outgoing %}
