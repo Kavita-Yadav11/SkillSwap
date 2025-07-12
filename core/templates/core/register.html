@@ -1,8 +1,5 @@
 {% extends 'core/base.html' %}
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
+ 
 
 {% block css %}
 <style>
@@ -66,7 +63,7 @@
 </style>
 {% endblock %}
 
->>>>>>> Stashed changes
+    
 {% block content %}
 <div class="register-container">
     <h2>📝 Register for SkillSwap</h2>
@@ -76,10 +73,8 @@
         <button type="submit" class="btn btn-success">Register</button>
     </form>
 </div>
-=======
-=======
-
->>>>>>> Stashed changes
+        
+    
 {% block css %}
 <style>
     body {
@@ -143,16 +138,15 @@
 {% endblock %}
 
 {% block content %}
-<<<<<<< Updated upstream
+     
 <h2>Register</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-success">Register</button>
 </form>
->>>>>>> bc2b5f3def41583a9754b87216680d27bb6aeaf5
-=======
-<div class="register-container">
+   
+    <div class="register-container">
     <h2>📝 Register for SkillSwap</h2>
     <form method="post">
         {% csrf_token %}
@@ -160,5 +154,5 @@
         <button type="submit" class="btn btn-success">Register</button>
     </form>
 </div>
->>>>>>> Stashed changes
+    
 {% endblock %}

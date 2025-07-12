@@ -1,12 +1,7 @@
 {% extends 'core/base.html' %}
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
-=======
-
->>>>>>> Stashed changes
+ 
+        
+    
 {% block css %}
 <style>
     body {
@@ -63,13 +58,13 @@
 {% endblock %}
 
 {% block content %}
-<<<<<<< Updated upstream
+     
 <h2>My Profile</h2>
 <p><strong>Username:</strong> {{ user.username }}</p>
 <p><strong>Email:</strong> {{ user.email }}</p>
 <p><strong>Location:</strong> {{ user.location }}</p>
 <p><strong>Availability:</strong> {{ user.availability }}</p>
->>>>>>> bc2b5f3def41583a9754b87216680d27bb6aeaf5
+   
 
 {% block css %}
 <style>
@@ -126,7 +121,7 @@
 </style>
 {% endblock %}
 
->>>>>>> Stashed changes
+    
 {% block content %}
 <div class="profile-card">
     <h2>👤 My Profile</h2>
@@ -135,15 +130,14 @@
     <p><strong>Location:</strong> {{ user.location }}</p>
     <p><strong>Availability:</strong> {{ user.availability }}</p>
 
-=======
-<div class="profile-card">
+    <div class="profile-card">
     <h2>👤 My Profile</h2>
     <p><strong>Username:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Location:</strong> {{ user.location }}</p>
     <p><strong>Availability:</strong> {{ user.availability }}</p>
 
->>>>>>> Stashed changes
+    
     <div class="mt-4">
         <a href="{% url 'manage_skills' %}" class="btn btn-info">
             <i class="fas fa-tools"></i> Manage Skills
