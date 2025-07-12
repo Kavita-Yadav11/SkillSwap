@@ -1,6 +1,22 @@
 {% extends 'core/base.html' %}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+{% block css %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Manage My Skills</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Add Skill</button>
+</form>
+>>>>>>> bc2b5f3def41583a9754b87216680d27bb6aeaf5
 
 {% block css %}
 <style>

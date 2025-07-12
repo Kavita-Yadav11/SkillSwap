@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -75,4 +76,26 @@
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
+=======
+{% block css %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+>>>>>>> bc2b5f3def41583a9754b87216680d27bb6aeaf5
 {% endblock %}

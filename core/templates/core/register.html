@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -74,4 +75,19 @@
         <button type="submit" class="btn btn-success">Register</button>
     </form>
 </div>
+=======
+{% block css %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Register</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Register</button>
+</form>
+>>>>>>> bc2b5f3def41583a9754b87216680d27bb6aeaf5
 {% endblock %}
